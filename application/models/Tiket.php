@@ -8,23 +8,23 @@ class Tiket extends CI_Model
         return $this->db->get_where("tb_tiket", ["sesi" => $sesi])->result_array();
     }
 
-    public function get_tb_report($sesi)
+    public function get_tb_report()
     {
-        return $this->db->get_where("tb_report", ["sesi" => $sesi])->result_array();
+        return $this->db->get_where("tb_report")->result_array();
     }
 
-    public function pembelian($jumlah, $sesi, $jenis, $index)
+    public function pembelian($pendapatan, $jumlah)
     {
-        $tiket = $this->get_tiket_sesi($sesi);
-        $this->db->set('stok', (int)$tiket[$index]['stok'] - $jumlah);
-        $this->db->where('sesi', (int)$sesi);
-        $this->db->where('tiket', $jenis);
-        $this->db->update('tb_tiket');
+        // $tiket = $this->get_tiket_sesi($sesi);
+        // $this->db->set('stok', (int)$tiket[$index]['stok'] - $jumlah);
+        // $this->db->where('sesi', (int)$sesi);
+        // $this->db->where('tiket', $jenis);
+        // $this->db->update('tb_tiket');
 
-        $report = $this->get_tb_report($sesi);
-        $this->db->set('jumlah', (int)$report[$index]['jumlah'] + $jumlah);
-        $this->db->where('sesi', (int)$sesi);
-        $this->db->where('tiket', $jenis);
+        $report = $this->get_tb_report();
+        $this->db->set('pendapatan', (int)$report[1]['pendapatan'] + $pendapatan);
+        $this->db->where('tiketKelinci', $jumlah);
+        $this->db->where('tiketBunga', $jumlah);
         $this->db->update('tb_report');
     }
 

@@ -52,27 +52,27 @@ class Welcome extends CI_Controller
 
 	public function sistem()
 	{
-		$sesi = $this->input->post('sesi');
+		// $sesi = $this->input->post('sesi');
 
-		if ($this->session->userdata('nomorSesi')) {
-			$sesi = $this->session->userdata('nomorSesi');
-			$this->session->unset_userdata('nomorSesi');
-		}
+		// if ($this->session->userdata('nomorSesi')) {
+		// 	$sesi = $this->session->userdata('nomorSesi');
+		// 	$this->session->unset_userdata('nomorSesi');
+		// }
 
-		$this->load->model('Tiket');
-		$tiketpersesi = $this->Tiket->get_tiket_sesi($sesi);
-		$data['tiketpersesi'] = $tiketpersesi;
-		$data['nomorSesi'] = $sesi;
+		// $this->load->model('Tiket');
+		// $tiketpersesi = $this->Tiket->get_tiket_sesi($sesi);
+		// $data['tiketpersesi'] = $tiketpersesi;
+		// $data['nomorSesi'] = $sesi;
 
-		if (empty($data['tiketpersesi'])) {
-			$sesi = 1;
-			$tiketpersesi = $this->Tiket->get_tiket_sesi($sesi);
-			$data['tiketpersesi'] = $tiketpersesi;
-			$data['nomorSesi'] = $sesi;
-		}
+		// if (empty($data['tiketpersesi'])) {
+		// 	$sesi = 1;
+		// 	$tiketpersesi = $this->Tiket->get_tiket_sesi($sesi);
+		// 	$data['tiketpersesi'] = $tiketpersesi;
+		// 	$data['nomorSesi'] = $sesi;
+		// }
 
 		$this->load->view('header');
-		$this->load->view('sistem', $data);
+		$this->load->view('sistem');
 		$this->load->view('footer');
 	}
 
@@ -98,12 +98,12 @@ class Welcome extends CI_Controller
 	{
 		$pembelianKelinci = $this->input->post('jumlahKelinci');
 		$pembelianBunga = $this->input->post('jumlahBunga');
-		$sesiPembelian = $this->input->post('sesi');
+		// $sesiPembelian = $this->input->post('sesi');
 
 		$this->load->model('Tiket');
-		$this->Tiket->pembelian($pembelianKelinci, $sesiPembelian, 'Kelinci', 0);
-		$this->Tiket->pembelian($pembelianBunga, $sesiPembelian, 'Bunga', 1);
-		$this->session->set_userdata('nomorSesi', $sesiPembelian);
+		$this->Tiket->pembelian($pembelianKelinci*10000, $pembelianKelinci);
+		$this->Tiket->pembelian($pembelianBunga*200, $pembelianBunga);
+		// $this->session->set_userdata('nomorSesi', $sesiPembelian);
 		redirect('sistem');
 	}
 
