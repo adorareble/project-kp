@@ -19,6 +19,13 @@ class Welcome extends CI_Controller
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	
+	function __construct(){
+		parent::__construct();
+		$this->load->model('Tiket');
+	}
+
+
 	public function index()
 	{
 		$this->load->view('header');
@@ -52,25 +59,6 @@ class Welcome extends CI_Controller
 
 	public function sistem()
 	{
-		// $sesi = $this->input->post('sesi');
-
-		// if ($this->session->userdata('nomorSesi')) {
-		// 	$sesi = $this->session->userdata('nomorSesi');
-		// 	$this->session->unset_userdata('nomorSesi');
-		// }
-
-		// $this->load->model('Tiket');
-		// $tiketpersesi = $this->Tiket->get_tiket_sesi($sesi);
-		// $data['tiketpersesi'] = $tiketpersesi;
-		// $data['nomorSesi'] = $sesi;
-
-		// if (empty($data['tiketpersesi'])) {
-		// 	$sesi = 1;
-		// 	$tiketpersesi = $this->Tiket->get_tiket_sesi($sesi);
-		// 	$data['tiketpersesi'] = $tiketpersesi;
-		// 	$data['nomorSesi'] = $sesi;
-		// }
-
 		$this->load->view('header');
 		$this->load->view('sistem');
 		$this->load->view('footer');
@@ -86,9 +74,8 @@ class Welcome extends CI_Controller
 	public function laporan()
 	{
 		$this->load->model('Lapor');
-		$reportlapor = $this->Lapor->get_lapor();
-		$data['reportlapor'] = $reportlapor;
-
+		$data['id'] = $this->Lapor->get_lapor();
+		
 		$this->load->view('header');
 		$this->load->view('laporan', $data);
 		$this->load->view('footer');
@@ -98,23 +85,17 @@ class Welcome extends CI_Controller
 	{
 		$pembelianKelinci = $this->input->post('jumlahKelinci');
 		$pembelianBunga = $this->input->post('jumlahBunga');
-		// $sesiPembelian = $this->input->post('sesi');
 
-		$this->load->model('Tiket');
-		$this->Tiket->pembelian($pembelianKelinci*10000, $pembelianKelinci);
-		$this->Tiket->pembelian($pembelianBunga*200, $pembelianBunga);
-		// $this->session->set_userdata('nomorSesi', $sesiPembelian);
+		$pendapatan = ($pembelianKelinci*12212) + ($pembelianBunga*28821);
+
+		$data = array(
+			'tiketKelinci' 	=> $pembelianKelinci,
+			'tiketBunga' 		=> $pembelianBunga,
+			'pendapatan'		=> $pendapatan
+		);
+
+		$this->Tiket->insert($data);
 		redirect('sistem');
 	}
 
-	public function reset()
-	{
-		$resetTiket = 100;
-		$resetLaporan = 0;
-
-		$this->load->model('Tiket');
-		$this->Tiket->reset($resetLaporan, $resetTiket);
-
-		redirect('sistem');
-	}
 }

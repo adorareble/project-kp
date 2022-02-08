@@ -21,23 +21,15 @@
                 <th scope="col">Pendapatan</th>
                 </tr>
             </thead>
+            <?php foreach ($data as $x) : ?>
             <tbody>
                 <tr class="table-success">
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                    <td scope="row"><?= $x->tanggal ?></td>
+                    <td><?= $x->tiketKelinci ?></td>
+                    <td><?= $x->tiketBunga ?></td>
+                    <td><?= $x->pendapatan ?></td>
                 </tr>
-                <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-
-    <div class="text-center">
-        <form action="<?= base_url(); ?>Welcome/reset" method="POST"><button type="submit" class="btn btn-danger mt-5">Reset Laporan & Database Tiket</button></form>
     </div>

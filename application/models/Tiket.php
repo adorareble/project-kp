@@ -13,19 +13,9 @@ class Tiket extends CI_Model
         return $this->db->get_where("tb_report")->result_array();
     }
 
-    public function pembelian($pendapatan, $jumlah)
-    {
-        // $tiket = $this->get_tiket_sesi($sesi);
-        // $this->db->set('stok', (int)$tiket[$index]['stok'] - $jumlah);
-        // $this->db->where('sesi', (int)$sesi);
-        // $this->db->where('tiket', $jenis);
-        // $this->db->update('tb_tiket');
-
-        $report = $this->get_tb_report();
-        $this->db->set('pendapatan', (int)$report[1]['pendapatan'] + $pendapatan);
-        $this->db->where('tiketKelinci', $jumlah);
-        $this->db->where('tiketBunga', $jumlah);
-        $this->db->update('tb_report');
+    public function insert($data){
+        $this->db->insert('tb_report', $data);
+        return TRUE;
     }
 
     public function reset($resetLaporan, $resetTiket)
