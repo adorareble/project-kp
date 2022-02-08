@@ -5,6 +5,11 @@ class Lapor extends CI_Model
 {
     public function get_lapor()
     {
-        return $this->db->get('tb_report')->result_array();
+        $this->db->select('*');
+        $this->db->from('tb_report');
+
+        $result = $this->db->get();
+
+        return $result->result_array();
     }
 }

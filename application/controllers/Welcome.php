@@ -23,6 +23,7 @@ class Welcome extends CI_Controller
 	function __construct(){
 		parent::__construct();
 		$this->load->model('Tiket');
+		$this->load->model('Lapor');
 	}
 
 
@@ -73,8 +74,7 @@ class Welcome extends CI_Controller
 
 	public function laporan()
 	{
-		$this->load->model('Lapor');
-		$data['id'] = $this->Lapor->get_lapor();
+		$data['id'] = $this->db->get('tb_report')->result();
 		
 		$this->load->view('header');
 		$this->load->view('laporan', $data);
@@ -82,16 +82,18 @@ class Welcome extends CI_Controller
 	}
 
 	public function beli()
-	{
+	{	
+		date_default_timezone_set('Asia/Jakarta');
 		$pembelianKelinci = $this->input->post('jumlahKelinci');
 		$pembelianBunga = $this->input->post('jumlahBunga');
 
-		$pendapatan = ($pembelianKelinci*12212) + ($pembelianBunga*28821);
+		$pendapatan = ($pembelianKelinci*10000) + ($pembelianBunga*5000);
 
 		$data = array(
-			'tiketKelinci' 	=> $pembelianKelinci,
-			'tiketBunga' 		=> $pembelianBunga,
-			'pendapatan'		=> $pendapatan
+			// 'tanggal'		=> date('d-m-Y H:i:s'),
+			'tiketKelinci'	=> $pembelianKelinci,
+			'tiketBunga'	=> $pembelianBunga,
+			'pendapatan'	=> $pendapatan
 		);
 
 		$this->Tiket->insert($data);
