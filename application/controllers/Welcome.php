@@ -93,7 +93,7 @@ class Welcome extends CI_Controller
 		$pembelianKelinci = $this->input->post('jumlahKelinci');
 		$pembelianBunga = $this->input->post('jumlahBunga');
 
-		$pendapatan = ($pembelianKelinci * 10000) + ($pembelianBunga * 5000);
+		$pendapatan = ($pembelianKelinci * 10000) + ($pembelianBunga * 15000);
 
 		$data = array(
 			'tanggal'		=> $tanggal,

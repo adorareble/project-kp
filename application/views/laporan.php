@@ -95,7 +95,13 @@
                         <th scope="col">Pendapatan</th>
                     </tr>
                 </thead>
-                <?php foreach ($data as $x) : ?>
+                <?php 
+                $total = 0;
+                foreach ($data as $x) :
+                    $subt = ($x['tiketKelinci'] * 10000) + ($x['tiketBunga'] * 15000);
+                   $total +=$subt;
+                ?>
+            
                     <tbody>
                         <?php if ($x['id'] % 2 == 0) { ?>
                             <tr class="table-light">
@@ -111,12 +117,14 @@
                                 <td><?= $x['tiketBunga'] ?></td>
                                 <td>Rp. <?php echo number_format($x['pendapatan'], 0, ',', '.') ?></td>
                             </tr>
+    
                         <?php } ?>
                     <?php endforeach; ?>
+        
                     <tr class="table-danger">
                         
                         <td colspan="3" align="right"> Total </td>
-                        <td>Rp. <?php echo number_format($x['pendapatan'], 0, ',', '.') ?></td>
+                        <td>Rp. <?php echo number_format($total , 0, ',', '.') ?></td>
                     </tr>
                     </tbody>
             </table>
