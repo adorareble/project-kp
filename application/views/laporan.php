@@ -13,9 +13,9 @@
         <div>
             <h1 class="text-left" style="color: #496044; margin-top: 10%; margin-left: 3%"><b>REPORT PENJUALAN TIKET</b></h1>
         </div>
-        <form action="<?= base_url(); ?>Welcome/caridata" method="post">
+        <form action="<?= base_url(); ?>Welcome/cariData" method="get">
             <div class="d-flex justify-content" style="margin-left: 3%;">
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: 10em;" id="day">
+                <select class="form-select form-select-sm" name="tanggal" id="tanggal" aria-label=".form-select-sm example" style="width: 10em;" id="day">
                     <option selected>Tanggal</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -50,10 +50,10 @@
                     <option value="31">31</option>
                 </select>
 
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: 10em; margin-left: 1%" id="month">
+                <select class="form-select form-select-sm" name="bulan" id="bulan" aria-label=".form-select-sm example" style="width: 10em; margin-left: 1%" id="month">
                     <option selected>Bulan</option>
                     <option value="01">Januari</option>
-                    <option value="02">Februai</option>
+                    <option value="02">Februari</option>
                     <option value="03">Maret</option>
                     <option value="04">April</option>
                     <option value="05">Mei</option>
@@ -66,7 +66,7 @@
                     <option value="12">Desember</option>
                 </select>
 
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: 10em; margin-left: 1%" id="year">
+                <select class="form-select form-select-sm" name="tahun" id="tahun" aria-label=".form-select-sm example" style="width: 10em; margin-left: 1%" id="year">
                     <option selected>Tahun</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
@@ -77,43 +77,52 @@
                 <button type="submit" class="btn btn-primary text-center" style="background-color: #496044; color: white; margin-left: 1%">Cari</button>
             </div>
         </form>
-        
+
     </div>
 
     <div class="tiket text-light text-center d-flex justify-content-center mt-5">
-        <table class="table">
-            <thead>
-                <tr>
-                <th scope="col">Tanggal</th>
-                <th scope="col">Tiket Kelinci</th>
-                <th scope="col">Tiket Bunga</th>
-                <th scope="col">Pendapatan</th>
-                </tr>
-            </thead>
-            <?php foreach ($id as $x) : ?>
-            <tbody>
-                <?php if ($x->id %2 == 0) { ?>
-                    <tr class="table-light">
-                        <td><?= $x->tanggal ?></td>
-                        <td><?= $x->tiketKelinci ?></td>
-                        <td><?= $x->tiketBunga ?></td>
-                        <td>Rp. <?php echo number_format($x->pendapatan,0,',','.')?></td>
+        <?php
+        if ($data == null) {
+            echo "<h1 style='color:black'>Data Tidak Ditemukan!</h1>";
+        } else {
+        ?>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Tiket Kelinci</th>
+                        <th scope="col">Tiket Bunga</th>
+                        <th scope="col">Pendapatan</th>
                     </tr>
-                <?php } else { ?>
-                    <tr class="table-success">
-                        <td><?= $x->tanggal ?></td>
-                        <td><?= $x->tiketKelinci ?></td>
-                        <td><?= $x->tiketBunga ?></td>
-                        <td>Rp. <?php echo number_format($x->pendapatan,0,',','.')?></td>
-                    </tr>
-                <?php } ?> 
-                <?php endforeach; ?>
+                </thead>
+                <?php foreach ($data as $x) : ?>
+                    <tbody>
+                        <?php if ($x['id'] % 2 == 0) { ?>
+                            <tr class="table-light">
+                                <td><?= $x['tanggal'] ?></td>
+                                <td><?= $x['tiketKelinci'] ?></td>
+                                <td><?= $x['tiketBunga'] ?></td>
+                                <td>Rp. <?php echo number_format($x['pendapatan'], 0, ',', '.') ?></td>
+                            </tr>
+                        <?php } else { ?>
+                            <tr class="table-success">
+                                <td><?= $x['tanggal'] ?></td>
+                                <td><?= $x['tiketKelinci'] ?></td>
+                                <td><?= $x['tiketBunga'] ?></td>
+                                <td>Rp. <?php echo number_format($x['pendapatan'], 0, ',', '.') ?></td>
+                            </tr>
+                        <?php } ?>
+                    <?php endforeach; ?>
                     <tr class="table-danger">
                         <td></td>
                         <td></td>
                         <td><b>TOTAL</b></td>
-                        <td>Rp. <?php echo number_format($x->pendapatan,0,',','.')?></td>
+                        <td>Rp. <?php echo number_format($x['pendapatan'], 0, ',', '.') ?></td>
                     </tr>
-            </tbody>
-        </table>
+                    </tbody>
+            </table>
+        <?php
+        }
+        ?>
+
     </div>

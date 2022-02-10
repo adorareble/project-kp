@@ -19,8 +19,9 @@ class Welcome extends CI_Controller
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	
-	function __construct(){
+
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->model('Tiket');
 		$this->load->model('Lapor');
@@ -74,30 +75,65 @@ class Welcome extends CI_Controller
 
 	public function laporan()
 	{
-		$data['id'] = $this->db->get('tb_report')->result();
-		
+		$data = $this->db->get('tb_report')->result_array();
+		$data = array(
+			'data' => $data
+		);
+
 		$this->load->view('header');
 		$this->load->view('laporan', $data);
 		$this->load->view('footer');
 	}
 
 	public function beli()
-	{	
+	{
 		date_default_timezone_set('Asia/Jakarta');
+		$tanggal = date('Y-m-d');
+
 		$pembelianKelinci = $this->input->post('jumlahKelinci');
 		$pembelianBunga = $this->input->post('jumlahBunga');
 
-		$pendapatan = ($pembelianKelinci*10000) + ($pembelianBunga*5000);
+		$pendapatan = ($pembelianKelinci * 10000) + ($pembelianBunga * 5000);
 
 		$data = array(
-			// 'tanggal'		=> date('d-m-Y H:i:s'),
+			'tanggal'		=> $tanggal,
 			'tiketKelinci'	=> $pembelianKelinci,
 			'tiketBunga'	=> $pembelianBunga,
 			'pendapatan'	=> $pendapatan
 		);
 
-		$this->Tiket->insert($data);
+		$check = $this->Tiket->get_tb_report($tanggal);
+		if ($check != null) {
+			$this->Tiket->update($data);
+		} else {
+			$this->Tiket->insert($data);
+		}
 		redirect('sistem');
 	}
 
+	public function cariData()
+	{
+		$this->load->model('Lapor');
+		$tahun = $this->input->get('tahun');
+		$bulan = $this->input->get('bulan');
+		$tanggal = $this->input->get('tanggal');
+
+		$keyword = $tahun . "-" . $bulan . "-" . $tanggal;
+		if ($tahun == "Tahun" && $bulan == "Bulan" && $tanggal == "Tanggal") {
+			$data = $this->db->get('tb_report')->result_array();
+		} elseif ($tahun != "Tahun" && $bulan != "Bulan" && $tanggal != "Tanggal") {
+			$data = $this->Lapor->ambilData($keyword);
+		} else {
+			$data = $this->Lapor->ambilData1($tahun, $bulan, $tanggal);
+		}
+
+
+		$data = array(
+			'data' => $data
+		);
+
+		$this->load->view('header');
+		$this->load->view('laporan', $data);
+		$this->load->view('footer');
+	}
 }
