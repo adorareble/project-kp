@@ -86,9 +86,9 @@
             echo "<h1 style='color:black'>Data Tidak Ditemukan!</h1>";
         } else {
         ?>
-            <table class="table">
+            <table class="table table-bordered table-hover table-striped">
                 <thead>
-                    <tr>
+                    <tr style="background-color: #789C6F;">
                         <th scope="col">Tanggal</th>
                         <th scope="col">Tiket Kelinci</th>
                         <th scope="col">Tiket Bunga</th>
@@ -114,9 +114,8 @@
                         <?php } ?>
                     <?php endforeach; ?>
                     <tr class="table-danger">
-                        <td></td>
-                        <td></td>
-                        <td><b>TOTAL</b></td>
+                        
+                        <td colspan="3" align="right"> Total </td>
                         <td>Rp. <?php echo number_format($x['pendapatan'], 0, ',', '.') ?></td>
                     </tr>
                     </tbody>
