@@ -86,7 +86,10 @@
             echo "<h1 style='color:black'>Data Tidak Ditemukan!</h1>";
         } else {
         ?>
-            <table class="table table-bordered table-hover table-striped">
+    <div class="container-fluid">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr style="background-color: #789C6F;">
                         <th scope="col">Tanggal</th>
@@ -123,13 +126,14 @@
         
                     <tr class="table-danger">
                         
-                        <td colspan="3" align="right"> Total </td>
-                        <td>Rp. <?php echo number_format($total , 0, ',', '.') ?></td>
+                        <td colspan="3" align="right"><center><b>Total</b></center> </td>
+                        <td><b>Rp. <?php echo number_format($total , 0, ',', '.') ?></b></td>
                     </tr>
                     </tbody>
             </table>
         <?php
         }
         ?>
-
+            </div>
+        </div>
     </div>
