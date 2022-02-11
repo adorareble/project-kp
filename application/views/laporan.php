@@ -136,4 +136,5 @@
         ?>
             </div>
         </div>
+        <a href="<?= base_url('sistem')?>"><div class="btn btn-sm btn-success">Kembali</div></a>
     </div>
