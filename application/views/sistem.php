@@ -70,7 +70,7 @@
         function displayData() {
             var tiketKelinci = $("#cKelinci").val();
             var tiketBunga = $("#cBunga").val();
-            var totalHarga = (tiketKelinci*10000) + (tiketBunga*5000);
+            var totalHarga = (tiketKelinci*10000) + (tiketBunga*15000);
             var str =
                 "Tiket Kelinci : " + tiketKelinci +
                 "<br>Tiket Bunga : " + tiketBunga +
